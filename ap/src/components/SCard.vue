@@ -2,14 +2,15 @@
   <div>
     <div class="card">
       <img :src="image">
+      <div>{{ props.name }}</div>
       <div>Цена: {{ props.price }}</div>
-      <div>Описание:  {{ props.description }}</div>
-      <div v-if="store.state.items.findIndex(item => item.price === price) === -1" class="number">
+      <div class="description">Описание:  {{ props.description }}</div>
+      <div v-if="flag" class="number">
         <button @click="decrement">-</button>
         <div>{{ number }}</div>
         <button @click="++number">+</button>
       </div>
-      <button v-if="store.state.items.findIndex(item => item.price === price) === -1" @click="addItem">Добавить в корзину</button>
+      <button v-if="flag" @click="addItem">Добавить в корзину</button>
       <div v-else class="remove">
         Toвар добавлен в корзину
         <button @click="removeItem">Убрать из карзины</button>
@@ -19,15 +20,18 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, defineProps, defineEmits, watch } from 'vue';
+import { ref, defineProps, defineEmits, watch, computed } from 'vue';
 import { useStore } from 'vuex';
+import { Item } from '@/types';
 
 const store = useStore();
 const number = ref(0);
 const image = ref<string>('');
+const flag = computed(() => store.state.items.findIndex((item: Item )=> item.price === props.price) === -1)
 
 const emit = defineEmits(['addItem', 'removeItem']);
 const props = defineProps<{
+  name: string;
   price: number;
   description: string;
   img?: string;
@@ -46,7 +50,9 @@ function decrement() {
 }
 
 function addItem() {
+  if (number.value === 0) return alert("Please select");
   const item = {
+    name: props.name,
     price: props.price,
     description: props.description,
     img: image.value,
@@ -74,6 +80,7 @@ function removeItem() {
     align-items: center;
     flex-direction: center;
     border-radius: 20px;
+    padding: 10px;
   }
   .remove {
     display: flex;
@@ -91,5 +98,8 @@ function removeItem() {
   img {
     width: 130px;
     height: 130px;
+  }
+  .description {
+    text-align: center;
   }
 </style>

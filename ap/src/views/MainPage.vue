@@ -2,17 +2,16 @@
   <div class="auth">
     <SHeader v-model:items="items" />
     <div class="cards">
-      <SCard :price="123" description="huynya" @add-item="addItem" @remove-item="removeItem" img="logo.png"/>
-      <SCard :price="245" description="qwer" @add-item="addItem" @remove-item="removeItem"/>
-      <SCard :price="5425" description="123" @add-item="addItem" @remove-item="removeItem"/>
-      <SCard :price="2346" description="5445" @add-item="addItem" @remove-item="removeItem"/>
+      <SCard name="хлеб" :price="50" description="Супер мега крутой хлеб с манией величия" @add-item="addItem" @remove-item="removeItem" img="logo.png"/>
+      <SCard name="Цикорий" :price="245" description="Классный цикорий с возбуждающим эффектом" @add-item="addItem" @remove-item="removeItem" img="logo.png"/>
+      <SCard name="Морковь" :price="13" description="Просто морковь" @add-item="addItem" @remove-item="removeItem" img="logo.png"/>
+      <SCard name="Курская область" :price="2000000" description="Такое в приличном обществе не обсуждается..." @add-item="addItem" @remove-item="removeItem" img="logo.png"/>
     </div>
     <SFooter />
   </div>
 </template>
 
 <script lang="ts" setup>
-import router from '@/router';
 import SHeader from '@/components/SHeader.vue';
 import SFooter from '@/components/SFooter.vue';
 import SCard from '@/components/SCard.vue';
@@ -33,7 +32,6 @@ function removeItem(price: number) {
 
 <style lang="scss" scoped>
 .cards {
-  margin-top: 50px;
   gap: 20px;
   display: flex;
   flex-direction: row;
